@@ -1,0 +1,24 @@
+#!/bin/bash
+#
+# tanshanyang@163.com
+# 20220218
+# 
+# file0
+#     encode file0
+# file1
+#     Not 4 base at the end(E.g ACG): should not be encode; put the raw bases into a separate file1
+# file2
+#     AAGG (00001010): should not be encode; put the position into a separate file2
+
+: >file0
+: >file1
+: >file2
+
+fold -w 4 \
+| awk 'length($0)!=4{print >"file1";next};/AAGG/{print NR>"file2";next};1' \
+| tr 'ACGT' '0-3' \
+| awk '{print "obase=2;ibase=4;"$0 | "bc"}' \
+| awk '{printf("%08d\n",$0)}' \
+| perl -lpe '$_=pack"B*",$_' \
+| tr -d '\n' \
+>file0

@@ -1,0 +1,10 @@
+#!/bin/bash
+#
+# tanshanyang@163.com
+# 20220218
+
+perl -lpe '$_=unpack"B*"' \
+| fold -w 8 \
+| awk '{print "obase=4;ibase=2;"$0 | "bc" }' \
+| awk '{printf("%04d\n",$0)}' \
+| tr '0-3' 'ACGT'

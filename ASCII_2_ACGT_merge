@@ -1,0 +1,4 @@
+#!/bin/bash
+
+awk 'BEGIN{getline y<"file2";x=1}x==y{while(x==y){$0="AAGG\n"$0;x+=1;getline y<"file2"}}x<y{x+=1}{print}END{while(x<=y){print "AAGG";if(x==y)getline y<"file2";x+=1}}' \
+| cat - file1

@@ -1,0 +1,6 @@
+#!/bin/bash
+#
+# tanshanyang@163.com
+# 20220218
+
+<file0 ASCII_2_ACGT_file0 | ASCII_2_ACGT_merge | paste -sd ''
